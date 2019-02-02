@@ -12,8 +12,16 @@ class Registration extends React.Component {
     super();
     this.state = {
       firstName: '',
-      lastName: ''
+      lastName: '',
+      ward: '',
+      stake: '',
+      gender: '',
+      email: '',
+      phone: '',
+      specialNeeds: ''
     }
+
+    this.handleChange = this.handleChange.bind();
   }
 
 
@@ -67,7 +75,7 @@ class Registration extends React.Component {
                   aria-label="Sexo"
                   name="sexo"
                   row="true"
-                  value={this.state.sexo}
+                  value={this.state.gender}
                   onChange={this.handleChange}
                 >
                   <FormControlLabel value="female" control={<Radio />} label="Femenino" />
@@ -90,11 +98,21 @@ class Registration extends React.Component {
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
-                  id="cellphone"
-                  name="cellphone"
+                  id="phone"
+                  name="phone"
                   label="Teléfono"
                   fullWidth
-                  autoComplete="billing cellphone"
+                  autoComplete="billing phone"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="specialNeed"
+                  name="specialNeeds"
+                  label="Necesidades Especiales"
+                  fullWidth
+                  autoComplete="special"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
