@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-import Registration from './Registration';
+import Routes from './routes';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <div>
         <h1>Conferencia JAS 2019</h1>
-        <Registration></Registration>
+        <Routes></Routes>
       </div>
     );
   }

@@ -97,6 +97,18 @@ class Registration extends React.Component {
                   autoComplete="billing cellphone"
                 />
               </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  id="specialNeeds"
+                  name="specialNeeds"
+                  label="Necesidades Especiales"
+                  multiline={true}
+                  rows={3}
+                  fullWidth
+                  autoComplete="billing needs"
+                />
+              </Grid>
               <Grid item xs={12} sm={12}>
                 <Button variant="contained" color="primary">
                   Registrar
