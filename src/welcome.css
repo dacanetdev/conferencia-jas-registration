@@ -1,0 +1,13 @@
+.thumb-nail {
+    width: 20rem;
+    height: 20rem;
+}
+
+.image-root {
+    display: flex;
+}
+
+.image-container {
+    flex: 12;
+    align-items: center;
+}
