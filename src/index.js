@@ -2,11 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import * as firebase from 'firebase';
-import config from './firebase.config';
 import App from './App';
-
-firebase.initializeApp(config);
 
 ReactDOM.render(<App />, document.getElementById('root')
 );
