@@ -4,7 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import { Button, Radio, RadioGroup, FormLabel, FormControlLabel } from '@material-ui/core';
+import { Button, Radio, RadioGroup, FormLabel, FormControlLabel, List, ListItem, Avatar } from '@material-ui/core';
+import { ErrorOutline } from '@material-ui/icons';
 import firebase from 'firebase';
 
 class Registration extends React.Component {
@@ -19,6 +20,8 @@ class Registration extends React.Component {
     specialNeeds: ''
   }
 
+  errorList = [];
+
   constructor(props, context) {
     super(props, context);
     this.handleChange = this.handleChange.bind(this);
@@ -32,6 +35,13 @@ class Registration extends React.Component {
   }
 
   handleSubmit() {
+    this.validateFields();
+
+    if(this.errorList.length !== 0)
+    {
+      return;
+    }
+
     const participantRef = firebase.app().firestore().collection('participants');
     participantRef.add(this.state)
       .then(() => {
@@ -39,9 +49,47 @@ class Registration extends React.Component {
       })
   }
 
+  validateFields() {
+    this.errorList = [];
+    for (const key in this.state) {
+      if (this.state.hasOwnProperty(key)) {
+        if(key === 'specialNeeds') continue;
+
+        if(!this.state[key]){
+          this.errorList.push(key)
+        }
+
+      }
+    }
+  }
+
+  checkField(name) {
+    return this.errorList.indexOf(name) > 0;
+  }
+
+  listErrors() {
+    return this.errorList.map(error =>
+      <ListItem>
+      <Avatar>
+        <ErrorOutline></ErrorOutline>
+        {error}
+      </Avatar>
+    </ListItem>
+    );
+  }
+
   render() {
+    let errorMessage;
+    if(this.errorList.length !== 0) {
+      errorMessage =
+      <List>
+        {this.listErrors()}
+      </List>
+    }
+
     return (
       <React.Fragment>
+        {errorMessage}
         <Card>
           <CardHeader color="primary" title="Registro" subheader="Proporciona tus datos">
           </CardHeader>
@@ -54,6 +102,7 @@ class Registration extends React.Component {
                   defaultValue={this.state.firstName}
                   name="firstName"
                   label="Nombre"
+                  error={this.checkField('firstName')}
                   fullWidth
                   autoComplete="fname"
                   onChange={this.handleChange('firstName')}
@@ -135,7 +184,6 @@ class Registration extends React.Component {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   id="specialNeeds"
                   name="specialNeeds"
                   defaultValue={this.state.specialNeeds}
@@ -148,7 +196,7 @@ class Registration extends React.Component {
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
-                <Button variant="contained" color="primary" onClick={this.handleSubmit} >
+                <Button variant="contained" color="primary" onClick={this.handleSubmit()} >
                   Registrar
                   </Button>
               </Grid>

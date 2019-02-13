@@ -1,3 +1,11 @@
+
+.header {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    background-color:#bfe6d0;
+}
+
 .thumb-nail {
     width: 20rem;
     height: 20rem;
@@ -8,6 +16,24 @@
 }
 
 .image-container {
-    flex: 12;
-    align-items: center;
+    flex-basis:auto;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+@media screen and (max-width:480px){
+    .image-root {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .image-container{
+        flex-basis: auto;
+        flex-grow: 1;
+    }
+
+    .thumb-nail{
+        min-width:21.7rem;
+    }
 }

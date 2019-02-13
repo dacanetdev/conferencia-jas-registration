@@ -9,6 +9,8 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from "@material-ui/core";
 
 function desc(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -45,6 +47,13 @@ class Registrations extends React.Component {
         page: 0,
         rowsPerPage: 5,
     };
+
+    style = {
+        fontSize: 'medium',
+        border: '1px solid gray',
+        minHeight:'20rem',
+        overFlow: 'auto'
+    }
 
     componentDidMount() {
         const participantRef = firebase.app().firestore().collection('participants');
@@ -90,9 +99,14 @@ class Registrations extends React.Component {
 
         return <div>
             <h3>Lista de Registrados</h3>
-            <Paper>
-                <Table>
+                <Grid item xs={12}>
+                <Table style={this.style}>
                     <TableHead>
+                        <TableRow>
+                            <TableCell colSpan={8} align="right">
+                                {this.state.participants.length} Registros
+                            </TableCell>
+                        </TableRow>
                         <TableRow>
                             <TableCell
                                 key='firstName'
@@ -242,7 +256,6 @@ class Registrations extends React.Component {
                     </TableHead>
                     <TableBody>
                         {stableSort(this.state.participants, getSorting(order, orderBy))
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map(participant => (
                                 <TableRow key={participant.id}>
                                     <TableCell component="th" scope="row">
@@ -259,22 +272,7 @@ class Registrations extends React.Component {
                             ))}
                     </TableBody>
                 </Table>
-                <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={this.state.participants.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    backIconButtonProps={{
-                        'aria-label': 'Previous Page',
-                    }}
-                    nextIconButtonProps={{
-                        'aria-label': 'Next Page',
-                    }}
-                    onChangePage={this.handleChangePage}
-                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                />
-            </Paper>
+                </Grid>
         </div>
 
 
